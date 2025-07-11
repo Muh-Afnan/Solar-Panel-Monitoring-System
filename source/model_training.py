@@ -1,4 +1,3 @@
-# model_training.py
 import tensorflow as tf
 from tensorflow.keras import layers, models, callbacks
 
@@ -19,13 +18,13 @@ def build_model(num_classes, input_shape=(256, 256, 3)):
     ])
     return model
 
-def train_model(model, train_ds, val_ds, log_dir="logs", epochs=10):
+def train_model(model, train_ds, val_ds, log_dir,checkpoint_path ,epochs):
     model.compile(optimizer='adam',
                   loss='categorical_crossentropy',
                   metrics=['accuracy'])
 
     callbacks_list = [
-        callbacks.ModelCheckpoint("best_model.h5", save_best_only=True, verbose=1),
+        callbacks.ModelCheckpoint(checkpoint_path, save_best_only=True, verbose=1),
         callbacks.EarlyStopping(patience=3, restore_best_weights=True, verbose=1),
         callbacks.TensorBoard(log_dir=log_dir)
     ]
