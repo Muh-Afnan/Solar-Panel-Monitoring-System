@@ -7,7 +7,7 @@ def build_model(num_classes, input_shape=(256, 256, 3)):
         input_shape=input_shape,
         include_top=False,
         weights='imagenet'
-    )
+    ) 
     base_model.trainable = False
 
     model = models.Sequential([
