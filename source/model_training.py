@@ -1,19 +1,41 @@
 import tensorflow as tf
+from tensorflow.keras.applications import MobileNetV2, VGG16, ResNet50,EfficientNetB0
 from tensorflow.keras import layers, models, callbacks
 
-def build_model(num_classes, input_shape=(256, 256, 3)):
-    base_model = tf.keras.applications.MobileNetV2(
-        input_shape=input_shape,
-        include_top=False,
-        weights='imagenet'
-    ) 
+def build_model(name,num_classes, input_shape, dropout):
+    if name == 'mobilenet':
+        base_model = MobileNetV2(
+            input_shape=input_shape,
+            include_top=False,
+            weights='imagenet'
+        ) 
+    elif name == 'vgg16':
+            base_model = VGG16(
+            input_shape=input_shape,
+            include_top=False,
+            weights='imagenet'
+        )
+    elif name == 'resnet50':
+            base_model = ResNet50(
+            input_shape=input_shape,
+            include_top=False,
+            weights='imagenet'
+        )
+    else:
+        base_model = EfficientNetB0(
+            input_shape=input_shape,
+            include_top=False,
+            weights='imagenet'
+        )
+
+                
     base_model.trainable = False
 
     model = models.Sequential([
         base_model,
         layers.GlobalAveragePooling2D(),
         layers.Dense(128, activation='relu'),
-        layers.Dropout(0.3),
+        layers.Dropout(dropout),
         layers.Dense(num_classes, activation='softmax')
     ])
     return model

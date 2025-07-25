@@ -1,3 +1,0 @@
-base_model: MobileNetV2
-dropout: 0.3
-dense_units: 128

@@ -1,0 +1,3 @@
+base_model: ["mobilenet", "vgg16", "resnet50", "efficientnet"]
+dropout: 0.2
+dense_units: 128

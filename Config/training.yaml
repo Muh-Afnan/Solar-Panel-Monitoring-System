@@ -1,0 +1,8 @@
+batch_size: 32
+epochs: 20
+img_height: 224
+img_width: 224
+validation_split: 0.2
+dataset_path: data/raw
+# log_dir: experiments/logs
+# checkpoint_path: experiments/checkpoints/best_model.h5
