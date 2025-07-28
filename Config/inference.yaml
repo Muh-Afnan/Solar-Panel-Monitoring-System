@@ -1,2 +1,1 @@
-model_path: models/final_model.h5
-tflite_path: models/model.tflite
+model_path: models/

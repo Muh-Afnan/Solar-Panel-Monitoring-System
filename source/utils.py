@@ -1,32 +1,26 @@
 import yaml
 import os
 from datetime import datetime
-from tensorflow.keras.utils import image_dataset_from_directory
-from PIL import Image
-
-from PIL import Image, UnidentifiedImageError
+import tensorflow as tf
 
 
 def load_config(path):
     with open(path, "r") as f:
         return yaml.safe_load(f)
     
-def create_experiment_folders(base_dir="experiments"):
+def create_experiment_folders(base_model,base_dir):
     timestamp = datetime.now().strftime("exp_%Y-%m-%d_%H-%M-%S")
-    exp_dir = os.path.join(base_dir,timestamp)
-
+    exp_dir = os.path.join(base_dir,base_model,timestamp)
+    os.makedirs(exp_dir,exist_ok = True)
     sub_folders = {
-        "root": exp_dir,
+        # "root": exp_dir,
         "logs":os.path.join(exp_dir,"logs"),
-        "checkpoints":os.path.join(exp_dir,"logs"),
-        "metrics":os.path.join(exp_dir,"logs")
+        "checkpoints":os.path.join(exp_dir,"checkpoints"),
+        "metrics":os.path.join(exp_dir,"metrics")
     }
-    for path in sub_folders:
+    for path in sub_folders.values():
         os.makedirs(path, exist_ok=True)
     return sub_folders
-
-import os
-import tensorflow as tf
 
 def remove_tensorflow_invalid_images(dataset_dir, allowed_exts={'.jpg', '.jpeg', '.png', '.bmp', '.gif'}):
     removed = 0

@@ -1,8 +1,8 @@
 import tensorflow as tf
 from tensorflow.keras.applications import MobileNetV2, VGG16, ResNet50,EfficientNetB0
-from tensorflow.keras import layers, models, callbacks
+from tensorflow.keras import layers, models, callbacks,regularizers
 
-def build_model(name,num_classes, input_shape, dropout):
+def build_model(name,num_classes, input_shape, dropout,regularizer):
     if name == 'mobilenet':
         base_model = MobileNetV2(
             input_shape=input_shape,
@@ -34,7 +34,8 @@ def build_model(name,num_classes, input_shape, dropout):
     model = models.Sequential([
         base_model,
         layers.GlobalAveragePooling2D(),
-        layers.Dense(128, activation='relu'),
+        layers.Dense(128, activation='relu',kernel_regularizer=regularizers.l2(regularizer)),
+        layers.BatchNormalization(),
         layers.Dropout(dropout),
         layers.Dense(num_classes, activation='softmax')
     ])

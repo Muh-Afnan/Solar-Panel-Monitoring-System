@@ -1,8 +1,14 @@
-import tensorflow as tf
+import os 
+from tensorflow.keras.models import save_model
 
-def export_model(model, tflite_path="model.tflite"):
-    converter = tf.lite.TFLiteConverter.from_keras_model(model)
-    tflite_model = converter.convert()
-    with open(tflite_path, "wb") as f:
-        f.write(tflite_model)
-    print(f"✅ TFLite model saved at {tflite_path}")
+def export_model (model, path, model_name):
+    
+    # Create directory if it doesn't exist
+    if not os.path.exists(path):
+        os.makedirs(path)
+
+    # Save the model in TensorFlow SavedModel format
+    full_path = os.path.join(path, model_name)
+    model.save(full_path)  # .keras or .h5 can be used as well
+
+    print(f"✅ Model saved successfully at: {full_path}")
