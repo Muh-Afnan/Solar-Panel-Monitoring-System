@@ -12,7 +12,7 @@ def main():
     model_cfg = load_config("config/model_params.yaml")
     infer_cfg = load_config("config/inference.yaml")
     base_model = model_cfg["base_model"]
-    exp_paths = create_experiment_folders(base_model=base_model)
+    exp_paths = create_experiment_folders(base_model=base_model,base_dir=train_cfg["experiments_path"])
     width = train_cfg["img_width"]
     height = train_cfg["img_height"]
 
