@@ -1,5 +1,5 @@
 # base_model: ["mobilenet", "vgg16", "resnet50", "efficientnet"]
 base_model: "mobilenet"
-dropout: 0.25
+dropout: 0.20
 dense_units: 128
 regularizer: 0.002

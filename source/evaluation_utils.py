@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import os
 import json
 
-def evaluate_model(model, val_ds, class_names, output_dir):
+def evaluate_model(model, val_ds, class_names, history,output_dir):
     y_true, y_pred = [], []
 
     for images, labels in val_ds:
@@ -21,6 +21,11 @@ def evaluate_model(model, val_ds, class_names, output_dir):
     os.makedirs(output_dir, exist_ok=True)
     with open(os.path.join(output_dir, "results.json"), "w") as f:
         json.dump(metrics, f, indent=4)
+    
+    # Save history to JSON
+    os.makedirs(output_dir, exist_ok=True)
+    with open(os.path.join(output_dir, "history.json"), "w") as f:
+        json.dump(history.history, f, indent=4)
 
     # Classification Report
     report = classification_report(y_true, y_pred, target_names=class_names, output_dict=True)
@@ -50,3 +55,39 @@ def evaluate_model(model, val_ds, class_names, output_dir):
         "report": report,
         "confusion_matrix": cm
     }
+
+def plot_loss_curve(history,output_dir):
+    training_loss = history.history["loss"]
+    validation_loss = history.history["val_loss"]
+    epochs = range(1,len(training_loss)+1)
+    plt.figure(figsize=(10, 8))
+    plt.plot(epochs,validation_loss,label = "Validaition Loss")
+    plt.plot(epochs,training_loss,label = "Training Loss")
+    plt.title("Loss Curve")
+    plt.xlabel("Epochs")
+    plt.ylabel("Loss")
+    plt.legend()
+    plt.tight_layout()
+    plt.savefig(os.path.join(output_dir, "Loss Curve.png"))
+    plt.close()
+
+def accuracy_curve(history,output_dir):
+    training_acc = history.history["accuracy"]
+    validation_acc = history.history["val_accuracy"]
+    epochs = range(1,len(training_acc)+1)
+    plt.figure(figsize=(10, 8))
+    plt.plot(epochs,validation_acc,label = "Validaition Accuracy")
+    plt.plot(epochs,training_acc,label = "Training Accuracy")
+    plt.title("Accuracy Curve")
+    plt.xlabel("Epochs")
+    plt.ylabel("Accuracy")
+    plt.legend()
+    plt.tight_layout()
+    plt.savefig(os.path.join(output_dir, "Accuracy Curve.png"))
+    plt.close()
+
+def generate_reports(model, val_ds, class_names, history,output_dir):
+    evaluations = evaluate_model(model, val_ds, class_names,history,output_dir)
+    plot_loss_curve(history,output_dir)
+    accuracy_curve(history,output_dir)
+    return evaluations

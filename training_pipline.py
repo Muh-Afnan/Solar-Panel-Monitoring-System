@@ -1,6 +1,6 @@
 from source.preprocessing import get_datasets
 from source.model_training import build_model, train_model
-from source.evaluation_utils import evaluate_model
+from source.evaluation_utils import generate_reports
 from source.export_utils import export_model
 from source.utils import load_config, create_experiment_folders
 from source.utils import remove_tensorflow_invalid_images
@@ -29,10 +29,6 @@ def main():
         validation_split=train_cfg["validation_split"]
     )
 
-    best_accuracy = 0
-    best_results = {}
-    best_model = None
-
     print("🧠 Building model...")
     model = build_model(
         base_model,
@@ -43,7 +39,7 @@ def main():
     )
 
     print("🚀 Training model...")
-    model = train_model(
+    model,history = train_model(
         model, train_ds, val_ds,
         log_dir=exp_paths["logs"],
         checkpoint_path = os.path.join(exp_paths["checkpoints"], "best_model.keras"),
@@ -51,17 +47,10 @@ def main():
     )
 
     print("📊 Evaluating model...")
-    results = evaluate_model(model, val_ds, class_names, output_dir=exp_paths["metrics"])
+    results = generate_reports(model, val_ds, class_names,history, output_dir=exp_paths["metrics"])
+    # results = evaluate_model(model, val_ds, class_names, output_dir=exp_paths["metrics"])
     print("Validation Accuracy:", results["metrics"]["accuracy"])
-    acccuracy = results["metrics"]["accuracy"]
-    if acccuracy >best_accuracy:
-        best_accuracy = acccuracy
-        best_results = results
-        best_model = base_model
 
-    print("💾 Exporting model...")
-
-    
     export_model(model, path=infer_cfg["model_path"],model_name= base_model)
 
 if __name__ == "__main__":
