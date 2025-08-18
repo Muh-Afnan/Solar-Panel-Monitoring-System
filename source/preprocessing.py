@@ -41,8 +41,8 @@ def get_datasets(dataset_path, width, height,batch_size, validation_split):
         # layers.RandomBrightness(0.2),
     ])
 
-    train_ds = train_ds.map(lambda x, y: (aug(x, training=True), y))
-    val_ds = val_ds.map(lambda x, y: (x / 255.0, y))
+    # train_ds = train_ds.map(lambda x, y: (aug(x, training=True), y))
+    # val_ds = val_ds.map(lambda x, y: (x / 255.0, y))
 
-    return train_ds.prefetch(tf.data.AUTOTUNE), val_ds.prefetch(tf.data.AUTOTUNE), class_names
-    # return train_ds, val_ds, class_names
+    # return train_ds.prefetch(tf.data.AUTOTUNE), val_ds.prefetch(tf.data.AUTOTUNE), class_names
+    return train_ds, val_ds, class_names

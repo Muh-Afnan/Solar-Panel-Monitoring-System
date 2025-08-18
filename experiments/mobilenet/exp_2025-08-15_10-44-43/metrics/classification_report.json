@@ -1,0 +1,51 @@
+{
+    "Bird-drop": {
+        "precision": 0.6578947368421053,
+        "recall": 0.5681818181818182,
+        "f1-score": 0.6097560975609756,
+        "support": 44.0
+    },
+    "Clean": {
+        "precision": 0.6938775510204082,
+        "recall": 0.85,
+        "f1-score": 0.7640449438202247,
+        "support": 40.0
+    },
+    "Dusty": {
+        "precision": 0.6521739130434783,
+        "recall": 0.3333333333333333,
+        "f1-score": 0.4411764705882353,
+        "support": 45.0
+    },
+    "Electrical-damage": {
+        "precision": 0.5909090909090909,
+        "recall": 0.8666666666666667,
+        "f1-score": 0.7027027027027027,
+        "support": 15.0
+    },
+    "Physical-Damage": {
+        "precision": 0.3333333333333333,
+        "recall": 0.5555555555555556,
+        "f1-score": 0.4166666666666667,
+        "support": 9.0
+    },
+    "Snow-Covered": {
+        "precision": 0.7,
+        "recall": 0.875,
+        "f1-score": 0.7777777777777778,
+        "support": 24.0
+    },
+    "accuracy": 0.6384180790960452,
+    "macro avg": {
+        "precision": 0.6046981041914026,
+        "recall": 0.6747895622895622,
+        "f1-score": 0.618687443186097,
+        "support": 177.0
+    },
+    "weighted avg": {
+        "precision": 0.648101315889615,
+        "recall": 0.6384180790960452,
+        "f1-score": 0.622605731238247,
+        "support": 177.0
+    }
+}
